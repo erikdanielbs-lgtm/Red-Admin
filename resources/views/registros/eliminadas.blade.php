@@ -70,8 +70,8 @@
                                 <tr>
                                     <td>{{ $registros->firstItem() + $loop->index }}</td>
                                     <td>{{ $registro->ip }}</td>
-                                    <td>{{ $registro->mac ?? '—' }}</td>
-                                    <td>{{ $registro->numero_serie ?? '—' }}</td>
+                                    <td>{{ $registro->mac ?? 'Pendiente' }}</td>
+                                    <td>{{ $registro->numero_serie ?? 'Pendiente' }}</td>
                                     <td class="text-start">{{ $registro->descripcion ?? '—' }}</td>
                                     <td>{{ $registro->responsable ?? '—' }}</td>
                                     <td>{{ $registro->dependencia->nombre ?? '—' }}</td>
@@ -85,7 +85,7 @@
                                         <button class="btn btn-success btn-sm rounded-pill me-1 restore-btn"
                                             data-id="{{ $registro->id }}"
                                             data-ip="{{ $registro->ip }}"
-                                            data-mac="{{ $registro->mac ?? '—' }}"
+                                            data-mac="{{ $registro->mac ?? 'Pendiente' }}"
                                             data-desc="{{ $registro->descripcion ?? '—' }}"
                                             data-resp="{{ $registro->responsable ?? 'N/A' }}"
                                             data-dep="{{ $registro->dependencia->nombre ?? 'N/A' }}"
@@ -98,7 +98,7 @@
                                         <button class="btn btn-danger btn-sm rounded-pill delete-btn"
                                             data-id="{{ $registro->id }}"
                                             data-ip="{{ $registro->ip }}"
-                                            data-mac="{{ $registro->mac ?? '—' }}"
+                                            data-mac="{{ $registro->mac ?? 'Pendiente' }}"
                                             data-desc="{{ $registro->descripcion ?? '—' }}"
                                             data-resp="{{ $registro->responsable ?? 'N/A' }}"
                                             data-dep="{{ $registro->dependencia->nombre ?? 'N/A' }}"

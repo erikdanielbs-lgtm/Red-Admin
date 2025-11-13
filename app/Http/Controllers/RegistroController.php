@@ -46,15 +46,20 @@ class RegistroController extends Controller
 
     public function store(RegistroRequest $request)
     {
-        $this->authorize('crear_ registros'); 
+        $this->authorize('crear_registros'); 
 
         $validated = $request->validated();
 
         Registro::onlyTrashed()
             ->where(function ($query) use ($validated) {
-                $query->where('ip', $validated['ip']) // Si la IP existe en la papelera
-                    ->orWhere('mac', $validated['mac']) // O si la MAC existe
-                    ->orWhere('numero_serie', $validated['numero_serie']); // O si Núm de Serie existe
+                $query->where('ip', $validated['ip']); // Si la IP existe en la papelera
+                if (!empty ($validated['mac'])){
+                    $query->orWhere('mac', $validated['mac']);
+                } 
+
+                if (!empty ($validated['numero_serie'])) {
+                    $query->orWhere('numero_serie', $validated['numero_serie']);
+                };
             })
             ->forceDelete();
 
@@ -64,8 +69,8 @@ class RegistroController extends Controller
             'segmento_id' => $validated['segmento_id'] ?? null,
             'dependencia_id' => $validated['dependencia_id'],
             'ip' => $validated['ip'],
-            'mac' => $validated['mac'],
-            'numero_serie' => $validated['numero_serie'],
+            'mac' => $validated['mac'] ?? null,
+            'numero_serie' => $validated['numero_serie'] ?? null,
             'descripcion' => $validated['descripcion'] ?? null,
             'responsable' => $validated['responsable'],
         ]);
@@ -268,8 +273,8 @@ class RegistroController extends Controller
             'segmento_id' => $validated['segmento_id'] ?? null,
             'dependencia_id' => $validated['dependencia_id'],
             'ip' => $validated['ip'],
-            'mac' => $validated['mac'],
-            'numero_serie' => $validated['numero_serie'],
+            'mac' => $validated['mac'] ?? null,
+            'numero_serie' => $validated['numero_serie'] ?? null,
             'descripcion' => $validated['descripcion'] ?? null,
             'responsable' => $validated['responsable'],
         ]);
@@ -302,7 +307,7 @@ class RegistroController extends Controller
         return response()->json([
             'id' => $registro->id,
             'ip' => $registro->ip,
-            'mac' => $registro->mac,
+            'mac' => $registro->mac ?? 'Pendiente',
             'descripcion' => $registro->descripcion ?? '—',
             'dependencia' => $registro->dependencia->nombre ?? 'N/A',
             'tipo' => $registro->tipo_dispositivo->tipo_dispositivo ?? 'N/A',

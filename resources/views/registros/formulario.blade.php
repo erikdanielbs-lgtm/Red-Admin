@@ -70,7 +70,7 @@
                         <option value="">Seleccionar tipo de dispositivo</option>
                         @foreach ($dispositivos as $disp)
                             <option value="{{ $disp->id }}"
-                                    data-red-id="{{ $disp->red_id }}" {{-- Añadido para el JS --}}
+                                    data-red-id="{{ $disp->red_id }}"
                                     {{ $dispositivoSeleccionado == $disp->id ? 'selected' : '' }}>
                                 {{ $disp->tipo_dispositivo }}
                             </option>
@@ -90,22 +90,20 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Dirección MAC</label>
+                    <label class="form-label">Dirección MAC (Opcional)</label>
                     <input type="text" name="mac"
                            class="form-control rounded-pill @error('mac') is-invalid @enderror"
                            placeholder="00:1A:2B:3C:4D:5E"
-                           value="{{ old('mac') }}"
-                           required>
+                           value="{{ old('mac') }}">
                     @error('mac') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Número de Serie</label>
+                    <label class="form-label">Número de Serie (Opcional)</label>
                     <input type="text" name="numero_serie"
                            class="form-control rounded-pill @error('numero_serie') is-invalid @enderror"
                            maxlength="100"
-                           value="{{ old('numero_serie') }}"
-                           required>
+                           value="{{ old('numero_serie') }}">
                     @error('numero_serie') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
 

@@ -97,15 +97,14 @@
                                 <tr>
                                     <td>{{ $registros->firstItem() + $loop->index }}</td>
                                     <td>{{ $registro->ip }}</td>
-                                    <td>{{ $registro->mac }}</td>
-                                    <td>{{ $registro->numero_serie ?? '—' }}</td>
+                                    <td>{{ $registro->mac ?? 'Pendiente' }}</td>
+                                    <td>{{ $registro->numero_serie ?? 'Pendiente' }}</td>
                                     <td class="text-start">{{ $registro->descripcion ?? '—' }}</td>
                                     <td>{{ $registro->responsable ?? '—' }}</td>
                                     <td>{{ $registro->dependencia->nombre ?? '—' }}</td>
                                     <td>{{ $registro->segmento->segmento ?? 'N/A' }}</td>
                                     <td>{{ $registro->tipo_dispositivo->tipo_dispositivo ?? '—' }}</td>
                                     
-                                    {{-- INICIO DE MODIFICACIÓN --}}
                                     @canany(['editar_registros', 'eliminar_registros'])
                                     <td>
                                         @can('editar_registros')

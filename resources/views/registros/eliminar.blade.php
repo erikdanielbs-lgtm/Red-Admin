@@ -49,7 +49,7 @@
                 <p class="fw-bold text">¿Deseas mover este registro a la papelera (Eliminadas)?</p>
                 <ul class="list-group mb-3">
                     <li class="list-group-item"><strong>IP:</strong> <span id="detalleIp"></span></li>
-                    <li class="list-group-item"><strong>MAC:</strong> <span id="detalleMac"></span></li>
+                    <li class="list-group-item"><strong>MAC:</strong> <span id="detalleMac"></span></li> *Pendiente
                     <li class="list-group-item"><strong>Descripción:</strong> <span id="detalleDesc"></span></li>
                     <li class="list-group-item"><strong>Tipo de Dispositivo:</strong> <span id="detalleTipo"></span></li>
                     <li class="list-group-item"><strong>Responsable:</strong> <span id="detalleResp"></span></li>
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (response.ok) {
             document.getElementById('detalleIp').textContent = data.ip;
-            document.getElementById('detalleMac').textContent = data.mac;
+             document.getElementById('detalleMac').textContent = data.mac; 
             document.getElementById('detalleDesc').textContent = data.descripcion ?? '—';
             document.getElementById('detalleTipo').textContent = data.tipo;
             document.getElementById('detalleResp').textContent = data.responsable;

@@ -16,7 +16,7 @@ class RegistroRequest extends FormRequest
 
     public function rules(): array
     {
-        $registroId = $this->route('registro');
+        $registroId = $this->route('id');
         $redId = $this->input('red_id');
         $red = $redId ? Red::find($redId) : null;
 
@@ -24,18 +24,32 @@ class RegistroRequest extends FormRequest
             'ip' => [
                 'required', 'ipv4', 'max:15',
                 Rule::unique('registros', 'ip')->ignore($registroId)->whereNull('deleted_at'),
-                function ($attribute, $value, $fail) {
-                    if (preg_match('/\.(126|127|128)$/', $value)) {
-                        $fail('Los números de host del 126 al 128 no están permitidos.');
+               
+                   //validación dinámica
+                function ($attribute, $value, $fail) use ($red) {
+                    if (!$red) {
+                        return;
+                    }
+                    
+                    //obtener el último octeto de la IP
+                    $octetos = explode('.', $value);
+                    $host = end($octetos);
+
+                    //obtener los hosts reservados de la red
+                    $hostsReservados = $red->hosts_reservados ?? [];
+
+                    // Comprobar si el host está en la lista de reservados
+                    if (in_array($host, $hostsReservados)) {
+                        $fail("El host '{$host}' está reservado para esta red y no puede ser asignado.");
                     }
                 },
             ],
             'mac' => [
-                'required', 'regex:/^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$/',
+                'nullable', 'regex:/^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$/',
                 Rule::unique('registros', 'mac')->ignore($registroId)->whereNull('deleted_at'),
             ],
             'numero_serie' => [
-                'required', 'string', 'max:100',
+                'nullable', 'string', 'max:100',
                 Rule::unique('registros', 'numero_serie')->ignore($registroId)->whereNull('deleted_at'),
             ],
             
@@ -80,10 +94,8 @@ class RegistroRequest extends FormRequest
             'ip.required' => 'La dirección IP es obligatoria.',
             'ip.ipv4' => 'La dirección IP no tiene un formato válido.',
             'ip.unique' => 'Esta dirección IP ya está registrada.',
-            'mac.required' => 'La dirección MAC es obligatoria.',
             'mac.regex' => 'El formato de la MAC debe ser como 00:1A:2B:3C:4D:5E.',
             'mac.unique' => 'Esta dirección MAC ya está registrada.',
-            'numero_serie.required' => 'El número de serie es obligatorio.',
             'numero_serie.unique' => 'Este número de serie ya está registrado.',
             'responsable.required' => 'Debe indicar el responsable.',
             'dependencia_id.required' => 'Debe seleccionar una dependencia.',

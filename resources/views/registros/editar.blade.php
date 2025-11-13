@@ -73,18 +73,18 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Dirección MAC</label>
+                    <label class="form-label">Dirección MAC (Opcional)</label>
                     <input type="text" name="mac"
                            class="form-control rounded-pill @error('mac') is-invalid @enderror"
-                           value="{{ old('mac', $registro->mac) }}" required>
+                           value="{{ old('mac', $registro->mac) }}">
                     @error('mac') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Número de Serie</label>
+                    <label class="form-label">Número de Serie (Opcional)</label>
                     <input type="text" name="numero_serie"
                            class="form-control rounded-pill @error('numero_serie') is-invalid @enderror"
-                           value="{{ old('numero_serie', $registro->numero_serie) }}" required>
+                           value="{{ old('numero_serie', $registro->numero_serie) }}">
                     @error('numero_serie') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
 
@@ -148,7 +148,6 @@ document.addEventListener('DOMContentLoaded', function () {
         segmentoContainer.style.display = usaSegmentos ? 'block' : 'none';
         if (!usaSegmentos) segmentoSelect.value = '';
 
-        actualizarIP();
     }
 
     function actualizarIP() {
@@ -164,10 +163,16 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    redSelect.addEventListener('change', actualizarSegmento);
+    redSelect.addEventListener('change', function() {
+        actualizarSegmento();
+        actualizarIP();   
+
+    });
+
     segmentoSelect.addEventListener('change', actualizarIP);
 
     actualizarSegmento();
+
 });
 </script>
 @endpush

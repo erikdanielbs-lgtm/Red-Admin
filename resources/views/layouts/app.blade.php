@@ -408,13 +408,13 @@ main.index-main {
 
 
   @php
-    $permisos_registros = [ 'crear_ registros', 'ver_registros', 'buscar_registros', 'editar_registros', 'eliminar_registros', 'ver_registros_eliminados'];
+    $permisos_registros = [ 'crear_registros', 'ver_registros', 'buscar_registros', 'editar_registros', 'eliminar_registros', 'ver_registros_eliminados'];
   @endphp
 
   @canany($permisos_registros)
   <ul class="nav flex-column mt-3">
     
-    @can('crear_ registros')
+    @can('crear_registros')
     <li class="nav-item"><a class="nav-link {{ Request::is('registros/create') ? 'active' : '' }}" href="{{ route('registros.create') }}"><i class="bi bi-plus-circle me-2"></i> Insertar IP</a></li>
     @endcan
 
