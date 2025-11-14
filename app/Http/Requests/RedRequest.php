@@ -46,7 +46,8 @@ class RedRequest extends FormRequest
         
     
         $uniqueRule = Rule::unique('redes', 'direccion_base')
-                          ->ignore($routeParam); 
+                          ->ignore($routeParam)
+                          ->whereNull('deleted_at'); 
 
         $usaSegmentos = $this->boolean('usa_segmentos');
         $regex = $usaSegmentos
@@ -67,6 +68,9 @@ class RedRequest extends FormRequest
                 'string',
                 'regex:/^(\d{1,3}(\s*,\s*\d{1,3})*)?$/' 
             ],
+
+            'roles' => 'nullable|array',
+            'roles.*' => 'exists:roles,id'
         ];
     }
 
@@ -77,6 +81,7 @@ class RedRequest extends FormRequest
             'direccion_base.regex' => 'El formato de la dirección no es válido para el tipo de red (asegúrese de que los octetos sean correctos).',
             'direccion_base.unique' => 'Esta dirección de red ya está registrada.',
             'hosts_reservados.regex' => 'El formato de hosts reservados debe ser números separados por coma (ej. 1, 126, 254).',
+            'roles.*.exists' => 'El rol seleccionado no es válido.'
         ];
     }
 
@@ -114,6 +119,7 @@ class RedRequest extends FormRequest
                     }
                 })
                 ->when($numericId, fn($q) => $q->where('id', '!=', $numericId))
+                ->whereNull('deleted_at')
                 ->exists();
 
             if ($conflicto) {

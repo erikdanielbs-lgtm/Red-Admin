@@ -21,7 +21,9 @@ class DispositivoRequest extends FormRequest
                 'string',
                 'max:100',
                 'regex:/^[\pL\s0-9]+$/u',
-                Rule::unique('dispositivos')->ignore($id),
+                Rule::unique('dispositivos')
+                ->ignore($id)
+                ->whereNull('deleted_at'),
             ],
 
             'red_id' => [

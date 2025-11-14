@@ -30,7 +30,9 @@ class RolRequest extends FormRequest
                 'string',
                 'max:50',
                 'regex:/^[\pL\s0-9]+$/u', 
-                Rule::unique('roles', 'nombre_rol')->ignore($id),
+                Rule::unique('roles', 'nombre_rol')
+                ->ignore($id)
+                ->whereNull('deleted_at'),
             ],
             'permisos'   => 'required|array',
             'permisos.*' => 'exists:permisos,id',

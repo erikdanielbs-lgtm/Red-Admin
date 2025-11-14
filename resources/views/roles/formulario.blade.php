@@ -24,7 +24,6 @@
                     @error('nombre_rol') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
 
-                {{-- INICIO DE MODIFICACIÓN --}}
                 <div class="mb-3">
                     <label class="form-label">Permisos Asignados</label>
                     <div class="card p-3 rounded-4" style="max-height: 400px; overflow-y: auto;">
@@ -45,7 +44,6 @@
                                                id="permiso_{{ $permiso->id }}"
                                                {{ ( is_array(old('permisos')) && in_array($permiso->id, old('permisos')) ) ? 'checked' : '' }}>
                                         <label class="form-check-label" for="permiso_{{ $permiso->id }}">
-                                            {{-- Opcional: limpiar el nombre del permiso --}}
                                             {{ Str::ucfirst(Str::replace('_', ' ', $permiso->nombre_permiso)) }}
                                         </label>
                                     </div>
@@ -62,7 +60,6 @@
                     </div>
                     @error('permisos') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
                 </div>
-                {{-- FIN DE MODIFICACIÓN --}}
 
                 <div class="d-flex justify-content-center gap-2">
                     <button type="submit" class="btn btn-success rounded-pill px-4">

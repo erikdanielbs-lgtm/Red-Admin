@@ -40,7 +40,6 @@
                                                name="permisos[]" 
                                                value="{{ $permiso->id }}" 
                                                id="permiso_{{ $permiso->id }}"
-                                               {{-- Lógica de "checked" para editar (funciona igual) --}}
                                                {{ in_array($permiso->id, old('permisos', $rol->permisos->pluck('id')->all())) ? 'checked' : '' }}
                                                >
                                         <label class="form-check-label" for="permiso_{{ $permiso->id }}">

@@ -73,7 +73,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Dirección IP Disponible</th>
-                                @can('crear_registross')
+                                @can('crear_registros')
                                 <th>Acciones</th>
                                 @endcan
                             </tr>
@@ -84,7 +84,7 @@
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $ip }}</td>
                                     
-                                    @can('crear_registross')
+                                    @can('crear_registros')
                                     <td>
                                         <a href="{{ route('registros.usar', [
                                             'ip' => $ip,

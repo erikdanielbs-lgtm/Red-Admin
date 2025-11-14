@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
 use App\Models\Red;
 
 class Dispositivo extends Model
 {
-    use Searchable;
+    use SoftDeletes, Searchable;
 
     protected $fillable = [
         'tipo_dispositivo',

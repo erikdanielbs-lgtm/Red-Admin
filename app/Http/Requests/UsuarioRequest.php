@@ -31,11 +31,15 @@ class UsuarioRequest extends FormRequest
         return [
             'nombre' => [
                 'required', 'string', 'max:100',
-                Rule::unique('usuarios', 'nombre')->ignore($id)
+                Rule::unique('usuarios', 'nombre')
+                ->ignore($id)
+                ->whereNull('deleted_at'),
             ],
             'codigo' => [
                 'required', 'integer', 'digits_between:6,9',
-                Rule::unique('usuarios', 'codigo')->ignore($id)
+                Rule::unique('usuarios', 'codigo')
+                ->ignore($id)
+                ->whereNull('deleted_at'),
             ],
             'password' => $this->isMethod('post') 
                 ? 'required|min:6|confirmed'

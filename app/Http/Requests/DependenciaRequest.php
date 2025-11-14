@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class DependenciaRequest extends FormRequest
 {
@@ -24,7 +25,14 @@ class DependenciaRequest extends FormRequest
         $id = $this->route('dependencia');
 
         return [
-            'nombre' => 'required|string|max:100|unique:dependencias,nombre,' . $id,
+            'nombre' => [
+                'required',
+                'string',
+                'max:100',
+                Rule::unique('dependencias', 'nombre')
+                ->ignore($id)
+                ->whereNull('deleted_at'),
+            ],
         ];
     }
 

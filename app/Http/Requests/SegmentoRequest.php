@@ -25,7 +25,8 @@ class SegmentoRequest extends FormRequest
                 'between:0,255',
                 Rule::unique('segmentos')
                     ->ignore($id)
-                    ->where(fn ($query) => $query->where('red_id', $this->input('red_id'))),
+                    ->where(fn ($query) => $query->where('red_id', $this->input('red_id')))
+                    ->whereNull('deleted_at'),
             ],
             'red_id' => [
                 'required',

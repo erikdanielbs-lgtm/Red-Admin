@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
 
 class Usuario extends Authenticatable
 {
-    use Notifiable, Searchable;
+    use SoftDeletes, Notifiable, Searchable;
 
     protected $fillable = ['nombre', 'codigo', 'password', 'dependencia_id', 'imagen'];
 
